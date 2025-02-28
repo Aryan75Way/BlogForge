@@ -32,7 +32,7 @@ const Navbar = async () => {
           <SignedIn>
             <>
               <Button className="text-md" asChild>
-                <Link href="/project/create">
+                <Link href="/blog/create">
                   <span className="max-sm:hidden">Create</span>
                   <CirclePlus className="size-6 sm:hidden" />
                 </Link>
