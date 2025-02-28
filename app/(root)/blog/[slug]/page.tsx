@@ -4,31 +4,36 @@ import Link from "next/link";
 import Image from "next/image";
 import markdownit from "markdown-it";
 import Header from "@/components/shared/Header";
+import { getBlogBySlug } from "@/lib/actions/blog.action";
 
 const md = markdownit();
 
 export const experimental_ppr = true;
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const id = (await params).id;
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const slug = (await params).slug;
 
-  // TODO: fetch blog on basis of id
-  const post = {
-    _createdAt: "2025-02-28T10:00:00Z",
-    views: 120,
-    author: {
-        _id:"1",
-        image:"",
-        name:"john",
-        username:"johndoe"
-    },
-    title: "Understanding Next.js with Strapi",
-    category: "Web Development",
-    _id: "post_1",
-    image: "https://example.com/image1.jpg",
-    description: "A deep dive into integrating Next.js with Strapi for a seamless blog experience.",
-    content:"**Hello World**"
-  }
+  
+  // const post = {
+  //   _createdAt: "2025-02-28T10:00:00Z",
+  //   views: 120,
+  //   author: {
+  //       _id:"1",
+  //       image:"",
+  //       name:"john",
+  //       username:"johndoe"
+  //   },
+  //   title: "Understanding Next.js with Strapi",
+  //   category: "Web Development",
+  //   _id: "post_1",
+  //   image: "https://example.com/image1.jpg",
+  //   description: "A deep dive into integrating Next.js with Strapi for a seamless blog experience.",
+  //   content:"**Hello World**"
+  // }
+
+  console.log(slug);
+  const post = await getBlogBySlug(slug);
+  console.log(post)
 
   if (!post) return notFound();
 
@@ -36,7 +41,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <Header heading={post.title} subHeading={formatDate(post?._createdAt)}>
+      <Header heading={post.title} subHeading={formatDate(post?.createdAt)}>
         <h2 className="max-w-4xl mx-auto font-work-sans tracking-tight italic px-5 text-center">
           {post.description}
         </h2>
