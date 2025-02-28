@@ -4,7 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import markdownit from "markdown-it";
 import Header from "@/components/shared/Header";
-import { getBlogBySlug } from "@/lib/actions/blog.action";
+import { getBlogBySlug, likePost } from "@/lib/actions/blog.action";
+import LikeButton from "@/components/LikeButton";
+import Comment from "@/components/Comment";
+import AllComments from "@/components/AllComments";
 
 const md = markdownit();
 
@@ -13,30 +16,9 @@ export const experimental_ppr = true;
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const slug = (await params).slug;
 
-  
-  // const post = {
-  //   _createdAt: "2025-02-28T10:00:00Z",
-  //   views: 120,
-  //   author: {
-  //       _id:"1",
-  //       image:"",
-  //       name:"john",
-  //       username:"johndoe"
-  //   },
-  //   title: "Understanding Next.js with Strapi",
-  //   category: "Web Development",
-  //   _id: "post_1",
-  //   image: "https://example.com/image1.jpg",
-  //   description: "A deep dive into integrating Next.js with Strapi for a seamless blog experience.",
-  //   content:"**Hello World**"
-  // }
-
-  console.log(slug);
   const post = await getBlogBySlug(slug);
-  console.log(post)
 
   if (!post) return notFound();
-
   const parsedContent = md.render(post?.content || "");
 
   return (
@@ -67,20 +49,22 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               <Image
                 src={post.author.image}
                 alt="avatar"
-                width={64}
-                height={64}
+                width={48}
+                height={48}
                 className="rounded-full drop-shadow-lg"
               />
 
-              <div>
                 <p className="text-lg font-medium">{post.author.name}</p>
-                <p className="text-sm font-light">@{post.author.username}</p>
-              </div>
             </Link>
 
-            <p className="text-[16px] bg-secondary px-4 py-2 rounded-full font-mono">
-              {post.category}
+            <div className="flex items-center gap-2">
+              <LikeButton
+              slug={post.slug}
+              />
+            <p className="text-[16px] px-2 py-2 rounded-full font-mono">
+              {post.likes}
             </p>
+            </div>
           </div>
 
           {parsedContent ? (
@@ -94,6 +78,15 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
         </div>
 
         <hr className="border-dashed max-w-4xl my-10 mx-auto" />
+
+        <Comment
+        postId={post.id}
+        authorId={post.author.id}
+        />
+
+        <AllComments
+        postId={post.id}
+        />
       </section>
     </>
   );
