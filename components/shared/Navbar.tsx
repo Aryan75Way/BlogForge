@@ -3,12 +3,11 @@ import Image from "next/image";
 import { CirclePlus, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ThemeToggle } from "./theme-toggle";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
+  SignOutButton,
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
@@ -38,18 +37,16 @@ const Navbar = async () => {
                 </Link>
               </Button>
 
-              <form
-                action={async () => {
-                  "use server";
-
-                  //   await signOut({ redirectTo: "/" });
-                }}
-              >
-                <Button type="submit" className="text-md" variant="secondary">
-                  <span className="max-sm:hidden">Logout</span>
-                  <LogOut className="size-6 sm:hidden text-red-500" />
+              <SignedIn>
+                <Button variant={"secondary"} className="text-md" asChild>
+                  <SignOutButton>
+                    <div>
+                      <p className="max-sm:hidden">Sign out</p>
+                      <LogOut className="size-6 sm:hidden text-red-500" />
+                    </div>
+                  </SignOutButton>
                 </Button>
-              </form>
+              </SignedIn>
 
               <UserButton />
             </>
