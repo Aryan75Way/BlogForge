@@ -43,6 +43,7 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.871 0.006 286.286);
+  --custom-card: black;
 }
 
 .dark {
@@ -78,6 +79,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
+  --custom-card: white;
 }
 
 @theme inline {
@@ -125,5 +127,116 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .form {
+    --main-color: var(--custom-card);
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    box-shadow: 4px 4px var(--main-color);
+  }
+
+  .font-geist-mono {
+      font-family: var(--font-geist-mono);
+  }
+}
+
+@layer utilities {
+  .heading {
+    @apply uppercase px-6 my-2 font-mono font-extrabold sm:text-2xl sm:leading-[64px] text-xl leading-[46px] max-w-5xl text-center;
+  }
+
+  .sub-heading {
+    @apply font-semibold text-2xl text-white max-w-2xl text-center break-words;
+  }
+
+  .section_container {
+    @apply px-6 py-10 max-w-7xl mx-auto;
+  }
+
+  .card_grid {
+    @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+  }
+
+  .card_grid-sm {
+    @apply grid sm:grid-cols-2 gap-5;
+  }
+
+  /* blogcard */
+  .blog-card_date {
+    @apply font-medium text-lg px-4 py-2;
+  }
+
+  .blog-card_desc {
+    @apply font-normal text-base line-clamp-2 my-3 break-all;
+  }
+
+  .blog-card_img {
+    @apply w-full h-40 rounded-lg object-cover;
+  }
+
+  .blog-card_btn {
+    @apply rounded-full font-medium text-sm text-white px-5 py-3 transition-all duration-500;
+  }
+
+  /* searchform */
+
+  .search-input {
+    @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black w-full h-auto outline-none;
+  }
+
+  .search-btn {
+    @apply size-[50px] rounded-full bg-black flex justify-center items-center;
+  }
+
+  /* blogform */
+  .blog-form {
+    @apply max-w-2xl mx-auto my-10 space-y-8 px-6;
+  }
+
+  .blog-form_label {
+    @apply font-bold text-[18px] uppercase;
+  }
+
+  .blog-form_input {
+    @apply border-[3px] px-5 py-7 text-[18px] font-semibold rounded-full mt-3 placeholder:font-normal;
+  }
+
+  .blog-form_textarea {
+    @apply border-[3px] p-5 text-[18px] font-semibold rounded-[20px] mt-3 placeholder:font-normal;
+  }
+
+  .blog-form_error {
+    @apply text-red-500 mt-2 ml-5;
+  }
+
+  .blog-form_editor {
+    @apply mt-5 border-[3px] text-lg font-semibold;
+  }
+
+  .blog-form_btn {
+    @apply bg-secondary rounded-full p-5 min-h-[70px] w-full font-bold text-lg;
+  }
+
+  /* profile */
+  .profile_container {
+    @apply w-full pb-10 pt-20 px-6 max-w-7xl mx-auto lg:flex-row flex-col flex gap-10;
+  }
+
+  .profile_card {
+    @apply w-80 px-6 pb-6 pt-20 flex flex-col justify-center items-center dark:bg-fuchsia-600 bg-fuchsia-500 shadow-lg rounded-[30px] relative z-0 h-fit max-lg:w-full;
+  }
+
+  .profile_title {
+    @apply w-11/12 bg-white dark:bg-black dark:border-white border-2 border-black rounded-[20px] px-5 py-3 absolute -top-9 after:absolute after:content-[''] after:-top-1 after:right-0 after:-skew-y-6 after:bg-black dark:after:bg-white after:-z-[1] after:rounded-[20px] after:w-full after:h-[60px] before:absolute before:content-[''] before:-bottom-1 before:left-0  before:-skew-y-6 before:w-full before:h-[60px] before:bg-black dark:before:bg-white  before:-z-[1] before:rounded-[20px] shadow-lg;
+  }
+
+  .profile_image {
+    @apply rounded-full object-cover border border-black;
+  }
+
+  .no-result {
+    @apply text-sm font-normal;
   }
 }
